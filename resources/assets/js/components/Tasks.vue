@@ -13,6 +13,7 @@
                                 <ul class="list-group">
                                     <li class="list-group-item" v-for="task in tasks">
                                         {{ task.body }}
+                                        <button class="btn btn-default btn-xs pull-right" @click="deleteTask(task.id)">x</button>
                                     </li>
                                 </ul>
                         </div>
@@ -53,6 +54,11 @@
             createTask: function () {
                 this.$http.post('api/task/store', this.task);
                 this.task.body = '';
+                this.getAllTasks();
+            },
+
+            deleteTask: function (id) {
+                this.$http.delete('api/task/' + id);
                 this.getAllTasks();
             }
         }
