@@ -20,5 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => 'api'], function () {
     Route::get('tasks', 'TaskController@getAllTasks');
     Route::post('task/store', 'TaskController@store');
+    Route::patch('task/{id}', 'TaskController@update');
     Route::delete('task/{id}', 'TaskController@destroy');
 });
