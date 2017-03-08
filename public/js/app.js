@@ -12128,12 +12128,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateTask: function updateTask(task) {
             this.$http.patch('api/task/' + task.id, { body: task.body });
             this.editTask = '';
-            this.getAllTasks();
         },
 
         deleteTask: function deleteTask(task) {
             this.$http.delete('api/task/' + task.id);
-            this.getAllTasks();
+            var index = this.tasks.indexOf(task);
+            this.tasks.splice(index, 1);
         },
 
         toggleCheck: function toggleCheck(task) {
