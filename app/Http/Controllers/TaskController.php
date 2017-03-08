@@ -30,8 +30,16 @@ class TaskController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = $request->input(['body']);
-        return Task::findOrFail($id)->update(['body' => $data]);
+        $data = [];
+        if ($request->has('body'))
+        {
+            $data['body'] = $request->input(['body']);
+        }
+        if ($request->has('checked'))
+        {
+            $data['checked'] = $request->input(['checked']);
+        }
+        Task::findOrFail($id)->update($data);
     }
 
     public function destroy($id)
