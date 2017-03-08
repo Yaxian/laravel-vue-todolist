@@ -18,6 +18,11 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+    <style>
+        .checked {
+            text-decoration: line-through;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

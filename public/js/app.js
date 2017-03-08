@@ -12083,18 +12083,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
         return {
-            tasks: [
-                //{'body': '1'},
-                //{'body': '2'},
-            ],
-            task: {
-                id: '',
-                body: ''
-            }
+            newTask: '',
+            tasks: [],
+            editTask: ''
         };
     },
 
@@ -12110,14 +12120,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         createTask: function createTask() {
-            this.$http.post('api/task/store', this.task);
-            this.task.body = '';
+            this.$http.post('api/task/store', { body: this.newTask });
+            this.newTask = '';
             this.getAllTasks();
         },
 
-        deleteTask: function deleteTask(id) {
-            this.$http.delete('api/task/' + id);
+        updateTask: function updateTask(task) {
+            this.$http.patch('api/task/' + task.id, { body: task.body });
+            this.editTask = '';
             this.getAllTasks();
+        },
+
+        deleteTask: function deleteTask(task) {
+            this.$http.delete('api/task/' + task.id);
+            this.getAllTasks();
+        },
+
+        toggleCheck: function toggleCheck(task) {
+            task.checked = task.checked == 0 ? 1 : 0;
+            this.$http.patch('api/task/' + task.id, { checked: task.checked });
+        }
+    },
+
+    directives: {
+        'task-focus': function taskFocus(el, value) {
+            if (value) {
+                el.focus();
+            }
         }
     }
 };
@@ -31762,18 +31791,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.task.body),
-      expression: "task.body"
+      value: (_vm.newTask),
+      expression: "newTask"
     }],
     staticClass: "form-control",
     attrs: {
       "type": "text",
-      "name": "body",
       "placeholder": "新增要做的事項...",
       "autofocus": ""
     },
     domProps: {
-      "value": (_vm.task.body)
+      "value": (_vm.newTask)
     },
     on: {
       "keyup": function($event) {
@@ -31782,7 +31810,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.task.body = $event.target.value
+        _vm.newTask = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -31792,14 +31820,85 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.tasks), function(task) {
     return _c('li', {
       staticClass: "list-group-item"
-    }, [_vm._v("\n                                    " + _vm._s(task.body) + "\n                                    "), _c('button', {
+    }, [_c('div', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (task === _vm.editTask),
+        expression: "task === editTask"
+      }]
+    }, [_c('input', {
+      directives: [{
+        name: "task-focus",
+        rawName: "v-task-focus",
+        value: (task === _vm.editTask),
+        expression: "task === editTask"
+      }, {
+        name: "model",
+        rawName: "v-model",
+        value: (task.body),
+        expression: "task.body"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        "type": "text"
+      },
+      domProps: {
+        "value": task.body,
+        "value": (task.body)
+      },
+      on: {
+        "keyup": [function($event) {
+          if (_vm._k($event.keyCode, "enter", 13)) { return null; }
+          _vm.updateTask(task)
+        }, function($event) {
+          if (_vm._k($event.keyCode, "esc", 27)) { return null; }
+          _vm.editTask = ''
+        }],
+        "blur": function($event) {
+          _vm.editTask = ''
+        },
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          task.body = $event.target.value
+        }
+      }
+    })]), _vm._v(" "), _c('div', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (task !== _vm.editTask),
+        expression: "task !== editTask"
+      }],
+      on: {
+        "dblclick": function($event) {
+          _vm.editTask = task
+        }
+      }
+    }, [_c('input', {
+      attrs: {
+        "type": "checkbox"
+      },
+      domProps: {
+        "checked": task.checked == 1
+      },
+      on: {
+        "click": function($event) {
+          _vm.toggleCheck(task)
+        }
+      }
+    }), _vm._v(" "), _c('label', {
+      class: {
+        checked: task.checked == 1
+      }
+    }, [_vm._v(_vm._s(task.body))]), _vm._v(" "), _c('button', {
       staticClass: "btn btn-default btn-xs pull-right",
       on: {
         "click": function($event) {
-          _vm.deleteTask(task.id)
+          _vm.deleteTask(task)
         }
       }
-    }, [_vm._v("x")])])
+    }, [_vm._v("x")])])])
   }))])])])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
