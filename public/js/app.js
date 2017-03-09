@@ -12098,13 +12098,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
         return {
             newTask: '',
             tasks: [],
-            editTask: ''
+            editTask: '',
+            tabActive: 'All'
         };
     },
 
@@ -12120,6 +12129,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         createTask: function createTask() {
+            if (this.newTask == '') return;
             this.$http.post('api/task/store', { body: this.newTask });
             this.newTask = '';
             this.getAllTasks();
@@ -31814,6 +31824,49 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('ul', {
+    staticClass: "nav nav-tabs"
+  }, [_c('li', {
+    class: {
+      active: _vm.tabActive == 'All'
+    },
+    on: {
+      "click": function($event) {
+        _vm.tabActive = 'All'
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#all"
+    }
+  }, [_vm._v("All")])]), _vm._v(" "), _c('li', {
+    class: {
+      active: _vm.tabActive == 'Done'
+    },
+    on: {
+      "click": function($event) {
+        _vm.tabActive = 'Done'
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#done"
+    }
+  }, [_vm._v("Done")])]), _vm._v(" "), _c('li', {
+    class: {
+      active: _vm.tabActive == 'Undo'
+    },
+    on: {
+      "click": function($event) {
+        _vm.tabActive = 'Undo'
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "#undo"
+    }
+  }, [_vm._v("Undo")])])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('ul', {
     staticClass: "list-group"

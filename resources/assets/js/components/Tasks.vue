@@ -10,6 +10,13 @@
                                 <input type="text" v-model="newTask" class="form-control" placeholder="新增要做的事項..." @keyup.enter="createTask()" autofocus>
                         </div>
                         <div class="form-group">
+                            <ul class="nav nav-tabs">
+                              <li :class="{ active: tabActive == 'All' }" @click="tabActive = 'All'"><a href="#all">All</a></li>
+                              <li :class="{ active: tabActive == 'Done' }" @click="tabActive = 'Done'"><a href="#done">Done</a></li>
+                              <li :class="{ active: tabActive == 'Undo' }" @click="tabActive = 'Undo'"><a href="#undo">Undo</a></li>
+                            </ul>
+                        </div>
+                        <div class="form-group">
                                 <ul class="list-group">
                                     <li class="list-group-item" v-for="task in tasks">
                                         <div v-show="task === editTask">
@@ -31,6 +38,7 @@
                                         </div>
                                     </li>
                                 </ul>
+                            </div>
                         </div>
                         <!-- {{ JSON.stringify($data) }} -->
                     </div>
@@ -46,7 +54,8 @@
             return {
                 newTask: '',
                 tasks: [],
-                editTask: ''
+                editTask: '',
+                tabActive: 'All'
             }
         },
 
@@ -62,6 +71,7 @@
             },
 
             createTask: function () {
+                if (this.newTask == '') return;
                 this.$http.post('api/task/store', { body: this.newTask });
                 this.newTask = '';
                 this.getAllTasks();

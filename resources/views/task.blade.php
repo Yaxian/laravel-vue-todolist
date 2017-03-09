@@ -19,6 +19,10 @@
         ]) !!};
     </script>
     <style>
+        body {
+            margin-top: 40px;
+        }
+
         .checked {
             text-decoration: line-through;
         }
