@@ -12152,6 +12152,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
 
+    computed: {
+        filterTasks: function filterTasks() {
+            var self = this;
+            return self.tasks.filter(function (task) {
+                if (self.tabActive == 'All') return task;
+                if (self.tabActive == 'Done') return task.checked == 1;
+                if (self.tabActive == 'Undo') return task.checked == 0;
+            });
+        }
+    },
+
     directives: {
         'task-focus': function taskFocus(el, value) {
             if (value) {
@@ -31870,7 +31881,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('ul', {
     staticClass: "list-group"
-  }, _vm._l((_vm.tasks), function(task) {
+  }, _vm._l((_vm.filterTasks), function(task) {
     return _c('li', {
       staticClass: "list-group-item"
     }, [_c('div', {

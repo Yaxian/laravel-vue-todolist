@@ -18,7 +18,7 @@
                         </div>
                         <div class="form-group">
                                 <ul class="list-group">
-                                    <li class="list-group-item" v-for="task in tasks">
+                                    <li class="list-group-item" v-for="task in filterTasks">
                                         <div v-show="task === editTask">
                                             <input type="text" class="form-control"
                                                 :value="task.body"
@@ -91,6 +91,17 @@
             toggleCheck: function (task) {
                 task.checked = (task.checked == 0) ? 1 : 0;
                 this.$http.patch('api/task/' + task.id, { checked: task.checked });
+            }
+        },
+
+        computed: {
+            filterTasks: function () {
+                var self = this;
+                return self.tasks.filter(function (task) {
+                    if (self.tabActive == 'All') return task;
+                    if (self.tabActive == 'Done') return task.checked == 1;
+                    if (self.tabActive == 'Undo') return task.checked == 0;
+                });
             }
         },
 
