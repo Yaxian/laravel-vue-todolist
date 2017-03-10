@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -45,5 +46,10 @@ class TaskController extends Controller
     public function destroy($id)
     {
         return Task::destroy($id);
+    }
+
+    public function deleteAll()
+    {
+        return DB::table('tasks')->delete();
     }
 }

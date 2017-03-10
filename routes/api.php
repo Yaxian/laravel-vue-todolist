@@ -22,4 +22,5 @@ Route::group(['middleware' => 'api'], function () {
     Route::post('task/store', 'TaskController@store');
     Route::patch('task/{id}', 'TaskController@update');
     Route::delete('task/{id}', 'TaskController@destroy');
+    Route::delete('tasks', 'TaskController@deleteAll');
 });
