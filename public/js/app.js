@@ -12106,6 +12106,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -12149,6 +12151,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         toggleCheck: function toggleCheck(task) {
             task.checked = task.checked == 0 ? 1 : 0;
             this.$http.patch('api/task/' + task.id, { checked: task.checked });
+        },
+
+        deleteAllTasks: function deleteAllTasks() {
+            this.$http.delete('api/tasks');
+            this.tasks = [];
         }
     },
 
@@ -31963,7 +31970,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("x")])])])
-  }))])])])])])])
+  })), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-default",
+    on: {
+      "click": function($event) {
+        _vm.deleteAllTasks()
+      }
+    }
+  }, [_vm._v("Delete All")])])])])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
