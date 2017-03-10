@@ -38,7 +38,10 @@
                                     </div>
                                 </li>
                             </ul>
-                            <button class="btn btn-default"
+                        </div>
+                        <div class="form-group">
+                            <span>共 {{ totalCount }} 筆</span>
+                            <button class="btn btn-default pull-right"
                                 @click="deleteAllTasks()"
                             >Delete All</button>
                         </div>
@@ -109,6 +112,10 @@
                     if (self.tabActive == 'Done') return task.checked == 1;
                     if (self.tabActive == 'Undo') return task.checked == 0;
                 });
+            },
+
+            totalCount: function () {
+                return this.filterTasks.length;
             }
         },
 

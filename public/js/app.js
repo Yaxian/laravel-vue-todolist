@@ -12108,6 +12108,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -12167,6 +12170,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (self.tabActive == 'Done') return task.checked == 1;
                 if (self.tabActive == 'Undo') return task.checked == 0;
             });
+        },
+
+        totalCount: function totalCount() {
+            return this.filterTasks.length;
         }
     },
 
@@ -31970,8 +31977,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("x")])])])
-  })), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-default",
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('span', [_vm._v("共 " + _vm._s(_vm.totalCount) + " 筆")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-default pull-right",
     on: {
       "click": function($event) {
         _vm.deleteAllTasks()
